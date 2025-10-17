@@ -6340,3 +6340,70 @@ body.standalone {
 .lot-card .lot-info { position:absolute; left:16px; right:16px; bottom:12px; z-index:2; color:#fff; text-shadow: 0 4px 12px rgba(0,0,0,0.45); }
 .lot-card .lot-info h3 { margin:0; font-size:18px; font-weight:700; }
 .lot-card .lot-body { padding:12px 14px 16px; background:linear-gradient(180deg,#fff,#fff); color:#333; }
+
+/* ===========================
+   CLEANUP: neutraliser conflits avec mobile-glass-nav.css
+   Colle ce bloc à la fin de styles.css (réversible).
+   =========================== */
+
+/* 1) Enlever padding-bottom locaux qui font chevaucher la bottom-nav mobile */
+body,
+.app-container,
+.main-content {
+    /* Enlève les paddings qui pouvaient repousser ou masquer la nav mobile.
+       mobile-glass-nav.css gère désormais le padding safe-area. */
+    padding-bottom: 0 !important;
+    margin-bottom: 0 !important;
+}
+
+/* 2) Neutraliser toute définition locale de .bottom-nav (pour éviter doublons) */
+.bottom-nav {
+    /* Si mobile-glass-nav.css fournit la nav, on retire la version locale */
+    display: none !important;
+    position: static !important;
+    bottom: auto !important;
+    left: auto !important;
+    right: auto !important;
+    width: auto !important;
+    z-index: auto !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    border-top: none !important;
+    padding: 0 !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
+/* 3) Éviter conflits de position/z-index du header (mobile-glass-nav.css met le header fixé sur mobile) */
+/* On ne casse pas l'apparence desktop — on neutralise uniquement les comportements qui peuvent
+   masquer ou entrer en conflit avec la bottom-nav sur mobile. */
+.header {
+    /* Ne pas forcer un z-index trop élevé qui pourrait bloquer la bottom-nav */
+    position: relative !important;
+    top: auto !important;
+    z-index: 9000 !important; /* inférieur à z-index très élevé utilisé par mobile-glass-nav.css */
+}
+
+/* 4) S'assurer que le contenu principal n'est pas poussé sous la nav mobile
+   (mobile-glass-nav.css applique son propre padding safe-area) */
+@media (max-width: 768px) {
+    body,
+    .app-container,
+    .main-content {
+        padding-bottom: 0 !important;
+        margin-bottom: 0 !important;
+    }
+
+    /* header peut rester fixe via mobile-glass-nav.css — on laisse la gestion au fichier mobile */
+    .header {
+        position: relative !important;
+        margin-bottom: 0 !important;
+    }
+}
+
+/* NOTE:
+   - Si tu préfères supprimer physiquement les blocs dans styles.css (au lieu d'utiliser
+     ces neutralisations), je peux te fournir les portions exactes à supprimer.
+   - Ce patch est réversible : supprime simplement ce bloc pour revenir en arrière.
+*/
