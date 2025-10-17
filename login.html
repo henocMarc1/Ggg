@@ -1,0 +1,717 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Connexion / Inscription — SIMMO 2.0</title>
+  <link rel="shortcut icon" href="logo.ico" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #6366F1;
+      --primary-dark: #4F46E5;
+      --secondary: #27AE60;
+      --accent: #E67E22;
+      --bg: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --card-bg: #FFFFFF;
+      --text-primary: #2C3E50;
+      --text-secondary: #5D6D7E;
+      --border-color: #E0E6ED;
+      --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      --shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.12);
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .auth-container {
+      width: 100%;
+      max-width: 1000px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: var(--card-bg);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      animation: slideUp 0.6s ease-out;
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .auth-brand {
+      background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%);
+      padding: 60px 40px;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .auth-brand::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+      animation: pulse 15s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.5; }
+      50% { transform: scale(1.1); opacity: 0.3; }
+    }
+
+    .brand-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .brand-logo img {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .brand-title {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .brand-subtitle {
+      font-size: 15px;
+      opacity: 0.95;
+      line-height: 1.6;
+      margin-bottom: 32px;
+    }
+
+    .brand-features {
+      list-style: none;
+      margin-top: 32px;
+    }
+
+    .brand-features li {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+      font-size: 14px;
+      opacity: 0.9;
+    }
+
+    .brand-features i {
+      width: 32px;
+      height: 32px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+    }
+
+    .auth-forms {
+      padding: 60px 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .form-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .form-tabs {
+      display: flex;
+      gap: 8px;
+      background: #F7F9FC;
+      padding: 6px;
+      border-radius: 12px;
+      margin-bottom: 32px;
+    }
+
+    .form-tab {
+      flex: 1;
+      padding: 12px 24px;
+      border: none;
+      background: transparent;
+      color: var(--text-secondary);
+      font-weight: 600;
+      font-size: 15px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .form-tab.active {
+      background: white;
+      color: var(--primary);
+      box-shadow: 0 2px 8px rgba(99, 102, 241, 0.15);
+    }
+
+    .auth-form {
+      display: none;
+      animation: fadeIn 0.3s ease-out;
+    }
+
+    .auth-form.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateX(10px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-label {
+      display: block;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+
+    .form-input-wrapper {
+      position: relative;
+    }
+
+    .form-input-wrapper i {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-secondary);
+      font-size: 16px;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 14px 16px 14px 48px;
+      border: 2px solid var(--border-color);
+      border-radius: 10px;
+      font-size: 15px;
+      font-family: 'Inter', sans-serif;
+      transition: var(--transition);
+      background: #F7F9FC;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      background: white;
+      box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+    }
+
+    .btn {
+      width: 100%;
+      padding: 14px 24px;
+      border: none;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #6366F1, #8B5CF6);
+      color: white;
+      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+    }
+
+    .btn-primary:active {
+      transform: translateY(0);
+    }
+
+    .form-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 16px;
+      font-size: 13px;
+    }
+
+    .forgot-link {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 500;
+      transition: var(--transition);
+    }
+
+    .forgot-link:hover {
+      color: var(--primary-dark);
+      text-decoration: underline;
+    }
+
+    .msg {
+      margin-top: 16px;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-size: 14px;
+      min-height: 20px;
+      display: none;
+    }
+
+    .msg.show {
+      display: block;
+      animation: slideDown 0.3s ease-out;
+    }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .msg.error {
+      background: #FEE2E2;
+      color: #DC2626;
+      border-left: 4px solid #DC2626;
+    }
+
+    .msg.success {
+      background: #D1FAE5;
+      color: #059669;
+      border-left: 4px solid #059669;
+    }
+
+    .loader {
+      display: none;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    .loader.show {
+      display: inline-block;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .divider {
+      text-align: center;
+      margin: 24px 0;
+      position: relative;
+      color: var(--text-secondary);
+      font-size: 13px;
+    }
+
+    .divider::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      width: 100%;
+      height: 1px;
+      background: var(--border-color);
+    }
+
+    .divider span {
+      background: white;
+      padding: 0 12px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .form-hint {
+      margin-top: 16px;
+      padding: 12px 16px;
+      background: #F7F9FC;
+      border-radius: 8px;
+      font-size: 13px;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .form-hint i {
+      color: var(--primary);
+    }
+
+    @media (max-width: 900px) {
+      .auth-container {
+        grid-template-columns: 1fr;
+        max-width: 500px;
+      }
+
+      .auth-brand {
+        padding: 40px 32px;
+      }
+
+      .brand-features {
+        display: none;
+      }
+
+      .auth-forms {
+        padding: 40px 32px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 16px;
+      }
+
+      .auth-brand {
+        padding: 32px 24px;
+      }
+
+      .auth-forms {
+        padding: 32px 24px;
+      }
+
+      .brand-title {
+        font-size: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="auth-container">
+    <!-- Left Panel: Brand -->
+    <div class="auth-brand">
+      <div class="brand-content">
+        <div class="brand-logo">
+          <img src="logo.jpeg" alt="SIMMO Logo">
+          <div>
+            <h1 class="brand-title">SIMMO 2.0</h1>
+            <div style="opacity: 0.9; font-size: 14px;">Gestion & Paiements</div>
+          </div>
+        </div>
+
+        <p class="brand-subtitle">
+          Plateforme moderne de gestion des membres et des paiements. 
+          Accédez à vos données en toute sécurité depuis n'importe quel appareil.
+        </p>
+
+        <ul class="brand-features">
+          <li>
+            <i class="fas fa-shield-alt"></i>
+            <span>Sécurisé</span>
+          </li>
+          <li>
+            <i class="fas fa-sync-alt"></i>
+            <span>Synchronisation en temps réel</span>
+          </li>
+          <li>
+            <i class="fas fa-chart-line"></i>
+            <span>Statistiques détaillées</span>
+          </li>
+          <li>
+            <i class="fas fa-mobile-alt"></i>
+            <span>Accessible partout</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Right Panel: Forms -->
+    <div class="auth-forms">
+      <div class="form-header">
+        <div class="form-tabs">
+          <button class="form-tab active" id="btnShowLogin">
+            <i class="fas fa-sign-in-alt"></i> Connexion
+          </button>
+          <button class="form-tab" id="btnShowSignup">
+            <i class="fas fa-user-plus"></i> Inscription
+          </button>
+        </div>
+      </div>
+
+      <!-- Login Form -->
+      <form id="loginForm" class="auth-form active">
+        <div class="form-group">
+          <label class="form-label" for="email">Adresse Email</label>
+          <div class="form-input-wrapper">
+            <i class="fas fa-envelope"></i>
+            <input id="email" type="email" class="form-input" placeholder="votre.email@exemple.com" required />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="password">Mot de passe</label>
+          <div class="form-input-wrapper">
+            <i class="fas fa-lock"></i>
+            <input id="password" type="password" class="form-input" placeholder="••••••••" minlength="6" required />
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">
+          <i class="fas fa-sign-in-alt"></i>
+          <span>Se connecter</span>
+          <div class="loader" id="loginLoader"></div>
+        </button>
+
+        <div class="form-footer">
+          <a href="#" id="forgotPasswordLink" class="forgot-link">
+            <i class="fas fa-key"></i> Mot de passe oublié ?
+          </a>
+        </div>
+
+        <div id="loginMsg" class="msg"></div>
+
+        <div class="form-hint">
+          <i class="fas fa-info-circle"></i>
+          <span>Utilisez vos identifiants  pour vous connecter</span>
+        </div>
+      </form>
+
+      <!-- Signup Form -->
+      <form id="signupForm" class="auth-form">
+        <div class="form-group">
+          <label class="form-label" for="displayName">Nom Complet</label>
+          <div class="form-input-wrapper">
+            <i class="fas fa-user"></i>
+            <input id="displayName" type="text" class="form-input" placeholder="Votre nom complet" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="suEmail">Adresse Email</label>
+          <div class="form-input-wrapper">
+            <i class="fas fa-envelope"></i>
+            <input id="suEmail" type="email" class="form-input" placeholder="votre.email@exemple.com" required />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="suPassword">Mot de passe</label>
+          <div class="form-input-wrapper">
+            <i class="fas fa-lock"></i>
+            <input id="suPassword" type="password" class="form-input" placeholder="Au moins 6 caractères" minlength="6" required />
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">
+          <i class="fas fa-user-plus"></i>
+          <span>Créer mon compte</span>
+          <div class="loader" id="signupLoader"></div>
+        </button>
+
+        <div id="signupMsg" class="msg"></div>
+
+        <div class="form-hint">
+          <i class="fas fa-info-circle"></i>
+          <span>Henoc Marc</span>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Firebase Scripts -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyAn8qN6WNhQSByxJjppGNZXZ5B7_sG-MV4",
+      authDomain: "simmo-21084.firebaseapp.com",
+      databaseURL: "https://simmo-21084-default-rtdb.firebaseio.com",
+      projectId: "simmo-21084",
+      storageBucket: "simmo-21084.firebasestorage.app",
+      messagingSenderId: "260886429597",
+      appId: "1:260886429597:web:aeeb11ec2ad4715cf7b974",
+      measurementId: "G-SBENTVR4SZ"
+    };
+
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
+
+    const auth = firebase.auth();
+    const db = firebase.database();
+
+    // Elements
+    const btnShowLogin = document.getElementById('btnShowLogin');
+    const btnShowSignup = document.getElementById('btnShowSignup');
+    const loginForm = document.getElementById('loginForm');
+    const signupForm = document.getElementById('signupForm');
+    const loginMsg = document.getElementById('loginMsg');
+    const signupMsg = document.getElementById('signupMsg');
+    const loginLoader = document.getElementById('loginLoader');
+    const signupLoader = document.getElementById('signupLoader');
+    const forgotPasswordLink = document.getElementById('forgotPasswordLink');
+
+    function showMessage(element, message, type = 'error') {
+      element.textContent = message;
+      element.className = `msg ${type} show`;
+      setTimeout(() => element.classList.remove('show'), 5000);
+    }
+
+    function showLogin() {
+      loginForm.classList.add('active');
+      signupForm.classList.remove('active');
+      btnShowLogin.classList.add('active');
+      btnShowSignup.classList.remove('active');
+      loginMsg.classList.remove('show');
+      signupMsg.classList.remove('show');
+    }
+    
+    function showSignup() {
+      signupForm.classList.add('active');
+      loginForm.classList.remove('active');
+      btnShowSignup.classList.add('active');
+      btnShowLogin.classList.remove('active');
+      loginMsg.classList.remove('show');
+      signupMsg.classList.remove('show');
+    }
+
+    btnShowLogin.addEventListener('click', (e) => { e.preventDefault(); showLogin(); });
+    btnShowSignup.addEventListener('click', (e) => { e.preventDefault(); showSignup(); });
+
+    // Check auth state
+    auth.onAuthStateChanged((user) => {
+      if (user && !sessionStorage.getItem('redirecting')) {
+        sessionStorage.setItem('redirecting', 'true');
+        window.location.replace('index.html');
+      }
+    });
+
+    // Login
+    loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      loginMsg.classList.remove('show');
+      loginLoader.classList.add('show');
+      
+      try {
+        const email = document.getElementById('email').value.trim();
+        const password = document.getElementById('password').value;
+        
+        if (!email || !password) {
+          throw new Error('Email et mot de passe requis.');
+        }
+        
+        await auth.signInWithEmailAndPassword(email, password);
+        sessionStorage.setItem('redirecting', 'true');
+        window.location.replace('index.html');
+      } catch (err) {
+        showMessage(loginMsg, err.message || 'Erreur de connexion', 'error');
+      } finally {
+        loginLoader.classList.remove('show');
+      }
+    });
+
+    // Signup
+    signupForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      signupMsg.classList.remove('show');
+      signupLoader.classList.add('show');
+      
+      try {
+        const email = document.getElementById('suEmail').value.trim();
+        const password = document.getElementById('suPassword').value;
+        const displayName = document.getElementById('displayName').value.trim();
+        
+        if (!email || !password) {
+          throw new Error('Email et mot de passe requis.');
+        }
+        
+        if (password.length < 6) {
+          throw new Error('Le mot de passe doit contenir au moins 6 caractères.');
+        }
+        
+        const cred = await auth.createUserWithEmailAndPassword(email, password);
+        const uid = cred.user.uid;
+        
+        if (displayName) {
+          await cred.user.updateProfile({ displayName });
+        }
+        
+        await db.ref(`users/${uid}/profile`).set({
+          email,
+          displayName: displayName || '',
+          createdAt: Date.now()
+        });
+        
+        await db.ref(`users/${uid}/appData`).set({
+          members: [],
+          lots: [],
+          payments: []
+        });
+        
+        showMessage(signupMsg, 'Compte créé avec succès ! Redirection...', 'success');
+      } catch (err) {
+        showMessage(signupMsg, err.message || 'Erreur lors de l\'inscription', 'error');
+      } finally {
+        signupLoader.classList.remove('show');
+      }
+    });
+
+    // Forgot password
+    forgotPasswordLink.addEventListener('click', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email').value.trim();
+      
+      if (!email) {
+        showMessage(loginMsg, 'Entrez votre email puis cliquez sur "Mot de passe oublié"', 'error');
+        return;
+      }
+      
+      try {
+        await auth.sendPasswordResetEmail(email);
+        showMessage(loginMsg, `Lien de réinitialisation envoyé à ${email}`, 'success');
+      } catch (err) {
+        showMessage(loginMsg, err.message || 'Erreur lors de l\'envoi du lien', 'error');
+      }
+    });
+  </script>
+</body>
+</html>
