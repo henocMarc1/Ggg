@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catalogue Produit - Lait Bébé</title>
+    <link rel="stylesheet" href="produit .css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    
+    <main class="container">
+        
+        <a href="index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Retour au Rayon Bébé</a>
+
+        <section class="product-catalog-detail">
+            
+            <div class="product-visuals">
+                <img src="https://via.placeholder.com/600x600/B0E0E6/000000?text=Lait+en+Poudre+1er+%C3%A2ge" alt="Lait en poudre pour bébé, boîte de 800g">
+                <div class="thumbnails">
+                    <img src="https://via.placeholder.com/100" alt="Vue 1">
+                    <img src="https://via.placeholder.com/100" alt="Vue 2">
+                </div>
+            </div>
+
+            <div class="product-info-sheet">
+                <h1>Lait en Poudre [Marque] 1er âge</h1>
+                <p class="brand-ref">Marque : Nestlé | Référence : LB-1A-800 | Rayon : Bébé</p>
+                
+                <div class="price-box">
+                    <span class="main-price">12.500 F CFA</span>
+                    <span class="unit-price">/ boîte de 800g</span>
+                </div>
+
+                <div class="catalog-options">
+                    
+                    <label>Format / Taille :</label>
+                    <select>
+                        <option>800g (12.500 F)</option>
+                        <option>400g (7.500 F)</option>
+                    </select>
+                    
+                    <label>Âge :</label>
+                    <div class="radio-options">
+                        <button class="option-btn selected">1er âge (0-6 mois)</button>
+                        <button class="option-btn">2ème âge (6-12 mois)</button>
+                        <button class="option-btn">Croissance (1-3 ans)</button>
+                    </div>
+                </div>
+
+                <div class="buy-zone">
+                    <input type="number" value="1" min="1" max="10" class="qty-input">
+                    <button class="btn-add-to-cart btn-lg" data-id="1">
+                        <i class="fa-solid fa-cart-plus"></i> Ajouter au panier
+                    </button>
+                </div>
+
+                <div class="product-description">
+                    <h2>Détails du Catalogue</h2>
+                    <p>Formule enrichie en fer et vitamines, conçue pour répondre aux besoins nutritionnels des nourrissons de 0 à 6 mois. Testé sous contrôle pédiatrique.</p>
+                    <ul>
+                        <li><i class="fa-solid fa-check-circle"></i> **Ingrédients :** Lactosérum déminéralisé, huiles végétales, maltodextrine, etc.</li>
+                        <li><i class="fa-solid fa-check-circle"></i> **Couleur :** Blanche (poudre)</li>
+                        <li><i class="fa-solid fa-check-circle"></i> **DLC :** Minimum 6 mois garanti à la livraison.</li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+        
+    </main>
+    
+    <script src="script.js"></script>
+</body>
+</html>

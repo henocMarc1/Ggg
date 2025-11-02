@@ -2,668 +2,358 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-      <link rel="manifest" href="manifest.json">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIMMO 2.0 </title>
-    <link rel="shortcut icon" href="logo.ico" type="image/x-icon" sizes="16x16" border-radius: "20px">
-    <link rel="stylesheet" href="styles.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<!-- Firebase Compat -->
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
-<link rel="stylesheet" href="styles.mobile.css">
-<!-- NOUVELLE LIGNE À AJOUTER -->
-<link rel="stylesheet" href="mobile-glass-nav.css">
-<!-- Configuration Firebase -->
-<script>
-const firebaseConfig = {
-    apiKey: "AIzaSyAn8qN6WNhQSByxJjppGNZXZ5B7_sG-MV4",
-    authDomain: "simmo-21084.firebaseapp.com",
-    databaseURL: "https://simmo-21084-default-rtdb.firebaseio.com",
-    projectId: "simmo-21084",
-    storageBucket: "simmo-21084.firebasestorage.app",
-    messagingSenderId: "260886429597",
-    appId: "1:260886429597:web:aeeb11ec2ad4715cf7b974",
-    measurementId: "G-SBENTVR4SZ"
-};
-firebase.initializeApp(firebaseConfig);
-console.log('Firebase initialisé!');
-
-firebase.auth().onAuthStateChanged(function(user) {
-  sessionStorage.removeItem('redirecting');
-  if (!user) {
-    window.location.replace('login.html');
-  } else {
-    window.currentUser = user;
-    console.log('Utilisateur connecté:', user.email);
+    <title>Maison Galaxy - Vos courses en ligne à Port-Bouët</title>
     
-    function initApp() {
-      const userNameEl = document.getElementById('userName');
-      const userAvatarEl = document.getElementById('userAvatar');
-      if (userNameEl && user.displayName) {
-        userNameEl.textContent = user.displayName;
-      } else if (userNameEl) {
-        userNameEl.textContent = user.email;
-      }
-      if (userAvatarEl && user.displayName) {
-        const initials = user.displayName.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
-        userAvatarEl.textContent = initials;
-      } else if (userAvatarEl && user.email) {
-        userAvatarEl.textContent = user.email.substring(0, 2).toUpperCase();
-      }
-      
-      const logoutBtn = document.getElementById('logoutBtn');
-      if (logoutBtn) {
-        logoutBtn.addEventListener('click', function() {
-          firebase.auth().signOut().then(function() {
-            window.location.replace('login.html');
-          }).catch(function(error) {
-            console.error('Erreur de déconnexion:', error);
-          });
-        });
-      }
-      
-      if (typeof PaymentManager !== 'undefined' && !window.paymentManager) {
-        window.paymentManager = new PaymentManager();
-      }
-    }
+    <link rel="stylesheet" href="index.css">
     
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initApp);
-    } else {
-      initApp();
-    }
-  }
-});
-</script>
-
-<!-- Script principal (SANS type="module") -->
-<script src="./script.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
-<link rel="stylesheet" href="styles.mobile.css"> 
-  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-  <meta http-equiv="Pragma" content="no-cache">
-  <meta http-equiv="Expires" content="0">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <div class="app-container">
-<header class="header">
-    <div class="header-content">
-        <div class="header-left">
-            <!-- >> INSÉRER juste après la div.logo dans .header-content -->
-<button id="mobileMenuBtn" class="mobile-menu" aria-label="Ouvrir le menu">
-  <span class="mobile-menu-icon">☰</span>
-</button>
 
-            <div class="logo">
-    <img src="logo.jpeg" style="height: 40px; width: 40px; border-radius: 50%;" />  
-                <span class="logo-text">SIMMO 2.0 GESTION</span>
+    <header>
+        <div class="header-top">
+            <div class="container top-container">
+                <div class="logo">
+                    <a href="index.html">MAISON GALAXY</a>
+                    <p class="slogan">Port-Bouët, Terre Rouge</p>
+                </div>
+
+                <div class="search-bar">
+                    <input type="text" placeholder="Rechercher un produit, une marque...">
+                    <button><i class="fa-solid fa-search"></i></button>
+                </div>
+
+                <div class="header-icons">
+                    <a href="#" class="icon-link">
+                        <i class="fa-solid fa-user"></i>
+                        <span>Compte</span>
+                    </a>
+                    <a href="page de paiemennt .html" class="icon-link cart-icon-wrapper">
+                        <i class="fa-solid fa-basket-shopping"></i>
+                        <span class="cart-count" id="cart-count-bubble">0</span>
+                        <span>Panier</span>
+                    </a>
+                </div>
             </div>
         </div>
         
-        <nav class="header-nav">
-            <button class="nav-tab active" data-tab="dashboard">
-    <img src="gauge-high-solid-full.svg" style="height: 25px; width: 40px; border-radius: 50%;" />  
-                Tableau de bord
-            </button>
-            <button class="nav-tab" data-tab="members">
-                <i class="fas fa-users"></i>
-                Membres
-            </button>
-            <button class="nav-tab" data-tab="lots">
-                <i class="fas fa-home"></i>
-                Lots
-            </button>
-            <button class="nav-tab" data-tab="payments">
-                <i class="fas fa-credit-card"></i>
-                Gestion des Paiements
-            </button>
-            <button class="nav-tab" data-tab="statistics">
-                <i class="fas fa-chart-line"></i>
-                Statistiques
-            </button>
+        <nav class="main-nav">
+            <div class="container">
+                <ul>
+                    <li><a href="index.html" class="active">Maison</a></li>
+                    <li class="has-submenu">
+    <a href="#bebe">Bébé <i class="fa-solid fa-caret-down"></i></a>
+    <div class="submenu">
+        <div class="submenu-col">
+            <h4>Alimentation Bébé</h4>
+            <ul>
+                <li><a href="rayon.html?cat=lait-poudre">Lait en poudre</a></li>
+                <li><a href="rayon.html?cat=petit-pots">Petits Pots & Purées</a></li>
+                <li><a href="rayon.html?cat=cereales-bebe">Céréales Bébé</a></li>
+            </ul>
+        </div>
+        <div class="submenu-col">
+            <h4>Hygiène & Soin</h4>
+            <ul>
+                <li><a href="rayon.html?cat=couches">Couches</a></li>
+                <li><a href="rayon.html?cat=lingettes">Lingettes & Coton</a></li>
+                <li><a href="rayon.html?cat=cremes-bebe">Crèmes & Lotions</a></li>
+            </ul>
+        </div>
+        <div class="submenu-col">
+            <h4>Accessoires</h4>
+            <ul>
+                <li><a href="rayon.html?cat=biberons">Biberons & Tétines</a></li>
+                <li><a href="rayon.html?cat=jouets">Jouets 0-2 ans</a></li>
+            </ul>
+        </div>
+    </div>
+</li>
+                    <li class="has-submenu">
+    <a href="#epicerie">Épicerie <i class="fa-solid fa-caret-down"></i></a>
+    <div class="submenu">
+        <div class="submenu-col">
+            <h4>Féculents & Bases</h4>
+            <ul>
+                <li><a href="rayon.html?cat=riz">Riz & Pâtes</a></li>
+                <li><a href="rayon.html?cat=farines">Farines & Poudres</a></li>
+                <li><a href="rayon.html?cat=conserves">Conserves</a></li>
+            </ul>
+        </div>
+        <div class="submenu-col">
+            <h4>Huiles, Vinaigres & Sauces</h4>
+            <ul>
+                <li><a href="rayon.html?cat=huile-veg">Huiles Végétales</a></li>
+                <li><a href="rayon.html?cat=condiments">Condiments & Vinaigres</a></li>
+                <li><a href="rayon.html?cat=ketchup">Ketchup & Mayonnaise</a></li>
+            </ul>
+        </div>
+        <div class="submenu-col">
+            <h4>Sucré & Petit Déjeuner</h4>
+            <ul>
+                <li><a href="rayon.html?cat=cafe-the">Café & Thé</a></li>
+                <li><a href="rayon.html?cat=sucre">Sucre & Miel</a></li>
+                <li><a href="rayon.html?cat=biscuits">Biscuits & Gâteaux</a></li>
+            </ul>
+        </div>
+    </div>
+</li>
+                  <li class="has-submenu">
+    <a href="#menage">Ménage <i class="fa-solid fa-caret-down"></i></a>
+    <div class="submenu">
+        <div class="submenu-col">
+            <h4>Entretien du Linge</h4>
+            <ul>
+                <li><a href="rayon.html?cat=lessive-poudre">Lessive Poudre & Liquide</a></li>
+                <li><a href="rayon.html?cat=adoucissant">Assouplissants</a></li>
+                <li><a href="rayon.html?cat=detachant">Détachants</a></li>
+            </ul>
+        </div>
+        <div class="submenu-col">
+            <h4>Nettoyage Cuisine</h4>
+            <ul>
+                <li><a href="rayon.html?cat=vaisselle">Liquide Vaisselle</a></li>
+                <li><a href="rayon.html?cat=eponges">Éponges & Chiffons</a></li>
+                <li><a href="rayon.html?cat=sacs-poubelle">Sacs Poubelles</a></li>
+            </ul>
+        </div>
+        <div class="submenu-col">
+            <h4>Sols & Surfaces</h4>
+            <ul>
+                <li><a href="rayon.html?cat=desinfectant">Désinfectants</a></li>
+                <li><a href="rayon.html?cat=serpillere">Serpillères & Balais</a></li>
+            </ul>
+        </div>
+    </div>
+</li>
+                    <li class="has-submenu">
+    <a href="#nouveau">Nouveautés <i class="fa-solid fa-caret-down"></i></a>
+    <div class="submenu submenu-small">
+        <div class="submenu-col">
+            <h4>À la Une</h4>
+            <ul>
+                <li><a href="rayon.html?cat=nouvelles-marques">Nouvelles Marques</a></li>
+                <li><a href="rayon.html?cat=dernieres-fraicheur">Dernières Arrivées Fraîcheur</a></li>
+            </ul>
+        </div>
+        <div class="submenu-col">
+            <h4>Offres Spéciales</h4>
+            <ul>
+                <li><a href="rayon.html?cat=promotions">Promotions de la Semaine</a></li>
+                <li><a href="rayon.html?cat=lots-speciaux">Lots Spéciaux</a></li>
+            </ul>
+        </div>
+    </div>
+</li>
+                   <li class="has-submenu">
+    <a href="#soin">Soin Personnel <i class="fa-solid fa-caret-down"></i></a>
+    <div class="submenu">
+        <div class="submenu-col">
+            <h4>Hygiène Corporelle</h4>
+            <ul>
+                <li><a href="rayon.html?cat=savon">Savon & Gel Douche</a></li>
+                <li><a href="rayon.html?cat=shampoing">Shampoings & Après-Shampoings</a></li>
+            </ul>
+        </div>
+        <div class="submenu-col">
+            <h4>Beauté & Soin</h4>
+            <ul>
+                <li><a href="rayon.html?cat=creme-corps">Crèmes & Lotions Corps</a></li>
+                <li><a href="rayon.html?cat=maquillage">Maquillage & Vernis</a></li>
+            </ul>
+        </div>
+        <div class="submenu-col">
+            <h4>Hygiène Bucco-Dentaire</h4>
+            <ul>
+                <li><a href="rayon.html?cat=dentifrice">Dentifrices</a></li>
+                <li><a href="rayon.html?cat=brosse-dent">Brosses à Dents</a></li>
+            </ul>
+        </div>
+    </div>
+</li>
+                   <li class="has-submenu">
+    <a href="#animaux">Animaux de Compagnie <i class="fa-solid fa-caret-down"></i></a>
+    <div class="submenu submenu-small">
+        <div class="submenu-col">
+            <h4>Pour Chiens</h4>
+            <ul>
+                <li><a href="rayon.html?cat=croquettes-chien">Croquettes</a></li>
+                <li><a href="rayon.html?cat=accessoires-chien">Accessoires & Jouets</a></li>
+            </ul>
+        </div>
+        <div class="submenu-col">
+            <h4>Pour Chats</h4>
+            <ul>
+                <li><a href="rayon.html?cat=pate-chat">Pâtée & Nourriture Humide</a></li>
+                <li><a href="rayon.html?cat=litiere">Litières</a></li>
+            </ul>
+        </div>
+    </div>
+</li>
+                    <li class="has-submenu">
+    <a href="#sportif">Sportif <i class="fa-solid fa-caret-down"></i></a>
+    <div class="submenu submenu-small">
+        <div class="submenu-col">
+            <h4>Nutrition Sportive</h4>
+            <ul>
+                <li><a href="rayon.html?cat=proteines">Protéines & Barres</a></li>
+                <li><a href="rayon.html?cat=boissons-isotoniques">Boissons Isotoniques</a></li>
+            </ul>
+        </div>
+        <div class="submenu-col">
+            <h4>Accessoires</h4>
+            <ul>
+                <li><a href="rayon.html?cat=equipement">Petits Équipements</a></li>
+            </ul>
+        </div>
+    </div>
+</li>
+                </ul>
+            </div>
         </nav>
+    </header>
+
+    <main class="container">
         
-        <div class="header-right">
-            <div class="user-profile">
-                <div class="user-avatar" id="userAvatar">U</div>
-                <i class="fa-solid fa-user"></i>
-                <span class="user-name" id="userName">Utilisateur</span>
-            </div>
-            <button class="btn btn-secondary" id="logoutBtn" style="margin-left: 12px;">
-                <i class="fas fa-sign-out-alt"></i> Déconnexion
-            </button>
-        </div>
-    </div>
-</header>
+        <section class="hero-banner">
+            <h1>Vos courses en ligne, livrées rapidement à Port-Bouët</h1>
+            <p>La fraîcheur et la qualité de Maison Galaxy, maintenant en un clic.</p>
+        </section>
 
-        <main class="main-content">
-<div class="tab-content active" id="dashboard">
-    <div class="dashboard-hero">
-        <div class="hero-content">
-            <h2 class="hero-title"><i class="fas fa-chart-bar"></i> Tableau de Bord</h2>
-            <p class="hero-subtitle">Vue d'ensemble de vos activités de tontines</p>
-        </div>
-        <div class="hero-stats">
-            <div class="hero-stat-card">
-                <div class="stat-icon"><i class="fas fa-users"></i></div>
-                <div class="stat-info">
-                    <span class="stat-number" id="totalMembers">0</span>
-                    <span class="stat-text">Membres Actifs</span>
-                </div>
-            </div>
-            <div class="hero-stat-card">
-                <div class="stat-icon"><i class="fas fa-money-bill-wave"></i></div>
-                <div class="stat-info">
-                    <span class="stat-number" id="totalPayments">0 FCFA</span>
-                    <span class="stat-text">Ce Mois</span>
-                </div>
-            </div>
-        </div>
+       <section class="thematic-banner">
+            <a href="rayon.html?cat=promo-rentree" class="promo-link">
+                <h2>🤩 Jours Fous : -30% sur tous les produits Scolaires et Ménagers !</h2>
+                <p>Jusqu'à épuisement des stocks. Cliquez ici pour voir la sélection complète.</p>
+            </a>
+        </section>
+
+       <h2 class="mt-5"><i class="fa-solid fa-seedling"></i> Tous nos produits du Quotidien</h2>
+
+<section class="product-grid">
+    
+    <div class="product-card" data-id="208">
+        <a href="#" class="product-link">
+            <img src="https://via.placeholder.com/150/A9A9A9/FFFFFF?text=Sardinelle+Huile" alt="Poisson Sardinelle à l'Huile">
+            <h3>Poisson Sardinelle à l'Huile (Boîte)</h3>
+        </a>
+        <div class="product-price">850 XOF</div>
+        <button class="btn-add-to-cart" data-id="208">Ajouter au panier</button>
     </div>
 
-    <div class="dashboard-grid">
-        <!-- Résumé Mensuel  -->
-        <div class="card premium-card full-width">
-            <div class="card-header">
-                <div class="header-left">
-                    <div class="card-icon"><i class="fas fa-chart-pie"></i></div>
-                    <h3 class="card-title">Résumé Mensuel</h3>
-                </div>
-                <div class="month-selector">
-                    <button class="month-nav" id="prevMonth">❮</button>
-                    <span id="currentMonth" class="current-month">Janvier 2025</span>
-                    <button class="month-nav" id="nextMonth">❯</button>
-                </div>
-            </div>
-            <div class="card-content">
-                <div class="summary-grid">
-                    <div class="summary-card success">
-                        <div class="summary-icon"><i class="fas fa-wallet"></i></div>
-                        <div class="summary-info">
-                            <div class="summary-label">Total Collecté</div>
-                            <div class="summary-value" id="monthlyCollected">0 FCFA</div>
-                        </div>
-                    </div>
-                    <div class="summary-card primary">
-                        <div class="summary-icon"><i class="fas fa-bullseye"></i></div>
-                        <div class="summary-info">
-                            <div class="summary-label">Objectif</div>
-                            <div class="summary-value" id="monthlyExpected">0 FCFA</div>
-                        </div>
-                    </div>
-                    <div class="summary-card info">
-                        <div class="summary-icon"><i class="fas fa-percentage"></i></div>
-                        <div class="summary-info">
-                            <div class="summary-label">Progression</div>
-                            <div class="summary-value" id="completionRate">0%</div>
-                        </div>
-                    </div>
-                    <div class="summary-card warning">
-                        <div class="summary-icon"><i class="fas fa-home"></i></div>
-                        <div class="summary-info">
-                            <div class="summary-label">Valeur Lots</div>
-                            <div class="summary-value" id="totalLotsValue">0 FCFA</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="progress-container">
-                    <div class="progress-header">
-                        <span>Progression du mois</span>
-                        <span id="progressPercentage">0%</span>
-                    </div>
-                    <div class="progress-bar-modern">
-                        <div class="progress-fill-modern" id="monthlyProgress"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Paiements Récents -->
-        <div class="card full-width recent-card">
-            <div class="card-header">
-                <div class="header-left">
-                    <div class="card-icon"><i class="fas fa-receipt"></i></div>
-                    <h3 class="card-title">Paiements Récents</h3>
-                </div>
-                <button class="btn btn-link" id="viewAllPayments">Voir Tout →</button>
-            </div>
-            <div class="card-content">
-                <div class="recent-payments-modern" id="recentPayments">
-                </div>
-            </div>
-        </div>
-
-        <!-- Actions Récentes  -->
-        <div class="card full-width actions-card">
-            <div class="card-header">
-                <div class="header-left">
-                    <div class="card-icon"><i class="fas fa-history"></i></div>
-                    <h3 class="card-title">Activités Récentes</h3>
-                </div>
-                <button class="btn btn-secondary btn-small" id="exportPDF"><i class="fas fa-file-pdf"></i> Export</button>
-            </div>
-            <div class="card-content">
-                <!-- Stats horizontales -->
-                <div class="activity-stats-horizontal">
-                    <div class="activity-stat-item success">
-                        <div class="activity-stat-icon"><i class="fas fa-check-circle"></i></div>
-                        <div class="activity-stat-info">
-                            <div class="activity-stat-number" id="paidMembers">0</div>
-                            <div class="activity-stat-label">Membres Payés</div>
-                        </div>
-                    </div>
-                    <div class="activity-stat-item warning">
-                        <div class="activity-stat-icon"><i class="fas fa-clock"></i></div>
-                        <div class="activity-stat-info">
-                            <div class="activity-stat-number" id="pendingMembers">0</div>
-                            <div class="activity-stat-label">En Attente</div>
-                        </div>
-                    </div>
-                    <div class="activity-stat-item info">
-                        <div class="activity-stat-icon"><i class="fas fa-percentage"></i></div>
-                        <div class="activity-stat-info">
-                            <div class="activity-stat-number" id="progressPercentage2">0%</div>
-                            <div class="activity-stat-label">Taux de Paiement</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Actions récentes -->
-                <div class="recent-actions-modern" id="recentActions">
-                </div>
-            </div>
-        </div>
+    <div class="product-card" data-id="209">
+        <a href="#" class="product-link">
+            <img src="https://via.placeholder.com/150/F0F8FF/000000?text=Spaghetti+1Kg" alt="Pâtes Spaghetti Qualité">
+            <h3>Pâtes Spaghetti Qualité (1Kg)</h3>
+        </a>
+        <div class="product-price">950 XOF</div>
+        <button class="btn-add-to-cart" data-id="209">Ajouter au panier</button>
     </div>
-</div>
 
-<!-- Modal des détails du lot -->
-<div class="modal-overlay" id="lotDetailsModal">
-    <div class="modal-container large">
-        <div class="modal-header">
-            <h3 class="" id="lotDetailsTitle">
-                <i class="fas fa-info-circle"></i> Détails du Lot
-            </h3>
-            <button class="modal-close" id="lotDetailsClose">&times;</button>
-        </div>
-<div class="member-lot">
-    <i class="fas fa-home"></i>
-</div>
-        <!-- Onglets du modal -->
-        <div class="modal-tabs">
-            <button class="modal-tab active" data-lot-tab="info">
-                <i class="fas fa-info-circle"></i> Informations
-            </button>
-            <button class="modal-tab" data-lot-tab="members">
-                <i class="fas fa-users"></i> Membres (<span id="lotMembersCount">0</span>)
-            </button>
-        </div>
-        
-        <div class="modal-content">
-            <!-- Onglet Informations -->
-            <div class="lot-tab-content active" id="lotTabInfo">
-                <div class="lot-details-grid">
-                    <div class="lot-detail-item">
-                        <div class="lot-detail-label">Nom du Lot</div>
-                        <div class="lot-detail-value" id="lotDetailName">-</div>
-                    </div>
-                    <div class="lot-detail-item">
-                        <div class="lot-detail-label">Prix</div>
-                        <div class="lot-detail-value" id="lotDetailPrice">-</div>
-                    </div>
-                    <div class="lot-detail-item">
-                        <div class="lot-detail-label">Localisation</div>
-                        <div class="lot-detail-value" id="lotDetailLocation">-</div>
-                    </div>
-                    <div class="lot-detail-item">
-                        <div class="lot-detail-label">Statut</div>
-                        <div class="lot-detail-value" id="lotDetailStatus">-</div>
-                    </div>
-                    <div class="lot-detail-item full-width">
-                        <div class="lot-detail-label">Description</div>
-                        <div class="lot-detail-value" id="lotDetailDescription">-</div>
-                    </div>
-                    <div class="lot-detail-item">
-                        <div class="lot-detail-label">Date de Création</div>
-                        <div class="lot-detail-value" id="lotDetailCreated">-</div>
-                    </div>
-                    <div class="lot-detail-item">
-                        <div class="lot-detail-label">Membres Inscrits</div>
-                        <div class="lot-detail-value" id="lotDetailMembersTotal">-</div>
-                    </div>
-                </div>
+    <div class="product-card" data-id="210">
+        <a href="#" class="product-link">
+            <img src="https://via.placeholder.com/150/FFA07A/FFFFFF?text=Œufs+x12" alt="Boîte de 12 Œufs Frais">
+            <h3>Boîte de 12 Œufs Frais</h3>
+        </a>
+        <div class="product-price">1600 XOF</div>
+        <button class="btn-add-to-cart" data-id="210">Ajouter au panier</button>
+    </div>
+    
+    <div class="product-card" data-id="211">
+        <a href="#" class="product-link">
+            <img src="https://via.placeholder.com/150/B0C4DE/000000?text=Savon+Ménage" alt="Savon de Ménage">
+            <h3>Savon de Ménage (Lot de 4)</h3>
+        </a>
+        <div class="product-price">1200 XOF</div>
+        <button class="btn-add-to-cart" data-id="211">Ajouter au panier</button>
+    </div>
+
+    <div class="product-card" data-id="212">
+        <a href="#" class="product-link">
+            <img src="https://via.placeholder.com/150/DDA0DD/000000?text=Beurre+Karité" alt="Beurre de Karité Pure">
+            <h3>Beurre de Karité Pure (250g)</h3>
+        </a>
+        <div class="product-price">2800 XOF</div>
+        <button class="btn-add-to-cart" data-id="212">Ajouter au panier</button>
+    </div>
+
+    <div class="product-card" data-id="213">
+        <a href="#" class="product-link">
+            <img src="https://via.placeholder.com/150/FFD700/000000?text=Jus+Tropical" alt="Jus de Fruit Tropical">
+            <h3>Jus de Fruit Tropical 1 Litre</h3>
+        </a>
+        <div class="product-price">1400 XOF</div>
+        <button class="btn-add-to-cart" data-id="213">Ajouter au panier</button>
+    </div>
+
+    <div class="product-card" data-id="214">
+        <a href="#" class="product-link">
+            <img src="https://via.placeholder.com/150/F5F5DC/000000?text=Pain+de+Mie" alt="Pain de Mie Complet">
+            <h3>Pain de Mie Complet (500g)</h3>
+        </a>
+        <div class="product-price">1700 XOF</div>
+        <button class="btn-add-to-cart" data-id="214">Ajouter au panier</button>
+    </div>
+
+    <div class="product-card" data-id="215">
+        <a href="#" class="product-link">
+            <img src="https://via.placeholder.com/150/006400/FFFFFF?text=Thé+Noir" alt="Thé Noir Traditionnel">
+            <h3>Thé Noir Traditionnel (Boîte 50 sachets)</h3>
+        </a>
+        <div class="product-price">2300 XOF</div>
+        <button class="btn-add-to-cart" data-id="215">Ajouter au panier</button>
+    </div>
+    
+</section>
+
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-col">
+                <h4>MAISON GALAXY</h4>
+                <p>Votre supermarché de proximité à Port-Bouët, Gonzague Ville, Terre Rouge.</p>
+                <p><i class="fa-solid fa-location-dot"></i> Port-Bouët, Abidjan</p>
+                <p><i class="fa-solid fa-phone"></i> +225 07 XX XX XX XX</p>
             </div>
             
-            <!-- Onglet Membres -->
-            <div class="lot-tab-content" id="lotTabMembers">
-                <div class="lot-members-list" id="lotMembersList">
-                </div>
+            <div class="footer-col">
+                <h4>Informations</h4>
+                <ul>
+                    <li><a href="a-propos.html">À Propos de Nous</a></li>
+                    <li><a href="cgv.html">Conditions Générales de Vente (CGV)</a></li>
+                    <li><a href="livraison.html">Livraison & Retrait</a></li>
+                    <li><a href="faq.html">FAQ / Aide</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-col">
+                <h4>Rayons Populaires</h4>
+                <ul>
+                    <li><a href="#epicerie">Épicerie</a></li>
+                    <li><a href="#bebe">Produits Bébé</a></li>
+                    <li><a href="#soin">Soin Personnel</a></li>
+                    <li><a href="#promo">Promotions</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>Paiement Sécurisé</h4>
+                <div class="payment-icons">
+                    <i class="fa-brands fa-cc-visa"></i>
+                    <i class="fa-brands fa-cc-mastercard"></i>
+                    <i class="fa-solid fa-mobile-screen-button"></i> </div>
             </div>
         </div>
-    </div>
-</div>
-            <div class="tab-content" id="members">
-                <div class="tab-header">
-                    <h2 class="tab-title">Membres</h2>
-                    <button class="btn btn-primary" id="addMemberBtn">Ajouter Membre</button>
-                </div>
-                
-                <div class="search-container">
-                    <div class="search-input-container">
-                        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="11" cy="11" r="8"></circle>
-                            <path d="m21 21-4.35-4.35"></path>
-                        </svg>
-                        <input type="text" id="memberSearch" class="search-input" placeholder="Rechercher des membres...">
-                    </div>
-                    <div class="filter-container">
-                        <select id="memberStatusFilter" class="filter-select">
-                            <option value="">Tous les statuts</option>
-                            <option value="paid">Payé</option>
-                            <option value="pending">En attente</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="members-grid" id="membersGrid">
-                </div>
-            </div>
-
-            <div class="tab-content" id="payments">
-                <div class="tab-header">
-                    <h2 class="tab-title">Paiements</h2>
-                    <button class="btn btn-primary" id="addPaymentBtn"></button>
-                </div>
-                
-                <div class="filters-container">
-                    <div class="filter-group">
-                        <select id="monthFilter" class="filter-select">
-                            <option value="">Tous les Mois</option>
-                        </select>
-                        <select id="memberFilter" class="filter-select">
-                            <option value="">Tous les Membres</option>
-                        </select>
-                        <button class="btn btn-secondary" id="exportPaymentsPDF">Export PDF</button>
-                    </div>
-                    <div class="search-input-container">
-                        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="11" cy="11" r="8"></circle>
-                            <path d="m21 21-4.35-4.35"></path>
-                        </svg>
-                        <input type="text" id="paymentSearch" class="search-input" placeholder="Rechercher des paiements...">
-                    </div>
-                </div>
-
-                <div class="payments-list" id="paymentsList">
-                </div>
-            </div>
-
-            <div class="tab-content" id="lots">
-                <div class="tab-header">
-                    <h2 class="tab-title">Lots Immobiliers</h2>
-                    <button class="btn btn-primary" id="addLotBtn">Ajouter Lot</button>
-                </div>
-                
-                <div class="search-container">
-                    <div class="search-input-container">
-                        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="11" cy="11" r="8"></circle>
-                            <path d="m21 21-4.35-4.35"></path>
-                        </svg>
-                        <input type="text" id="lotSearch" class="search-input" placeholder="Rechercher des lots...">
-                    </div>
-                </div>
-
-                <div class="lots-grid" id="lotsGrid">
-                </div>
-            </div>
-
-            <div class="tab-content" id="statistics">
-                <div class="tab-header">
-                    <h2 class="tab-title">Statistiques</h2>
-                    <div class="stats-controls">
-                        <select id="statsYearFilter" class="filter-select">
-                            <option value="">Année</option>
-                        </select>
-<button id="exportStatsBtn" class="btn btn-primary">Exporter</button>
-                    </div>
-                </div>
-
-                <div class="stats-grid">
-                    <div class="stats-overview">
-                        <div class="stat-card primary">
-                            <div class="stat-icon">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                                    <circle cx="9" cy="7" r="4"></circle>
-                                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                                </svg>
-                            </div>
-                            <div class="stat-info">
-                                <div class="stat-value" id="totalMembersStats">0</div>
-                                <div class="stat-label">Total Membres</div>
-                            </div>
-                        </div>
-
-                        <div class="stat-card secondary">
-                            <div class="stat-icon">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
-                                    <line x1="1" y1="10" x2="23" y2="10"></line>
-                                </svg>
-                            </div>
-                            <div class="stat-info">
-                                <div class="stat-value" id="totalPaymentsStats">0 FCFA</div>
-                                <div class="stat-label">Total Paiements</div>
-                            </div>
-                        </div>
-
-                        <div class="stat-card accent">
-                            <div class="stat-icon">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                                    <polyline points="9,22 9,12 15,12 15,22"></polyline>
-                                </svg>
-                            </div>
-                            <div class="stat-info">
-                                <div class="stat-value" id="totalLotsStats">0</div>
-                                <div class="stat-label">Lots Disponibles</div>
-                            </div>
-                        </div>
-
-                        <div class="stat-card success">
-                            <div class="stat-icon">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                                    <polyline points="22,4 12,14.01 9,11.01"></polyline>
-                                </svg>
-                            </div>
-                            <div class="stat-info">
-                                <div class="stat-value" id="completionRateStats">0%</div>
-                                <div class="stat-label">Taux de Completion</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="chart-container">
-                        <div class="chart-header">
-                            <h3 class="chart-title">Évolution Mensuelle</h3>
-                            <div class="chart-legend">
-                                <div class="legend-item">
-                                    <div class="legend-color primary"></div>
-                                    <span>Paiements</span>
-                                </div>
-                                <div class="legend-item">
-                                    <div class="legend-color secondary"></div>
-                                    <span>Nouveaux Membres</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="chart-content" id="monthlyChart">
-                        </div>
-                    </div>
-
-                    <div class="performance-table">
-                        <div class="table-header">
-                            <h3 class="table-title">Performance Mensuelle</h3>
-                        </div>
-                        <div class="table-content">
-                            <table class="stats-table">
-                                <thead>
-                                    <tr>
-                                        <th>Mois</th>
-                                        <th>Paiements</th>
-                                        <th>Montant</th>
-                                        <th>Nouveaux Membres</th>
-                                        <th>Taux de Completion</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="performanceTableBody">
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </main>
-
-
-    <div class="modal-overlay" id="modalOverlay">
-        <div class="modal" id="modal">
-            <div class="modal-header">
-                <h3 class="modal-title" id="modalTitle"></h3>
-                <button class="modal-close" id="modalClose">×</button>
-            </div>
-            <div class="modal-content" id="modalContent">
+        <div class="footer-bottom">
+            <div class="container">
+                &copy; 2025 Maison Galaxy. Tous droits réservés.
             </div>
         </div>
-    </div>
-
-    <div class="toast-container" id="toastContainer">
-    </div>
-
+    </footer>
+    
     <script src="script.js"></script>
-    <script>
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('service-worker.js', { scope: './' })
-    .then(reg => {
-      console.log('Service worker enregistré.');
-    })
-    .catch(err => {
-      console.error('Échec enregistrement SW :', err);
-    });
-}
-</script>
-<script>
-let deferredPrompt;
-const installButton = document.getElementById('installButton');
-
-installButton.style.display = 'none';
-
-window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
-  
-  installButton.style.display = 'block';
-  
-  installButton.addEventListener('click', async () => {
-    if (!deferredPrompt) return;
     
-    deferredPrompt.prompt();
-    const { outcome } = await deferredPrompt.userChoice;
-    
-    if (outcome === 'accepted') {
-      console.log('Application installée');
-      installButton.style.display = 'none';
-    }
-    
-    deferredPrompt = null;
-  });
-});
-
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('service-worker.js')
-      .then(registration => {
-        console.log('Service Worker enregistré avec succès:', registration);
-      })
-      .catch(error => {
-        console.log('Échec de l\'enregistrement du Service Worker:', error);
-      });
-  });
-}
-
-window.addEventListener('load', () => {
-  if (window.matchMedia('(display-mode: standalone)').matches) {
-    console.log('Lancement en mode application');
-    document.body.classList.add('standalone');
-  }
-});
-</script>
-<!-- Navigation mobile en bas (Style iOS) -->
-<nav class="bottom-nav">
-    <div class="bottom-nav-container">
-        <button class="bottom-nav-btn active" data-tab="dashboard">
-            <i class="fas fa-chart-pie"></i>
-            <span>Tableau</span>
-        </button>
-        
-        <button class="bottom-nav-btn" data-tab="members">
-            <i class="fas fa-users"></i>
-            <span>Membres</span>
-        </button>
-        
-        <button class="bottom-nav-btn" data-tab="lots">
-            <i class="fas fa-home"></i>
-            <span>Lots</span>
-        </button>
-        
-        <button class="bottom-nav-btn" data-tab="payments">
-            <i class="fas fa-credit-card"></i>
-            <span>Paiements</span>
-        </button>
-        
-        <button class="bottom-nav-btn" data-tab="statistics">
-            <i class="fas fa-chart-line"></i>
-            <span>Stats</span>
-        </button>
-    </div>
-</nav>
-
-<!-- Script de synchronisation -->
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const bottomBtns = document.querySelectorAll('.bottom-nav-btn');
-    const desktopBtns = document.querySelectorAll('.header-nav .nav-tab');
-    
-    function setActive(tabName) {
-        bottomBtns.forEach(b => b.classList.toggle('active', b.dataset.tab === tabName));
-        desktopBtns.forEach(b => b.classList.toggle('active', b.dataset.tab === tabName));
-    }
-    
-    bottomBtns.forEach(btn => {
-        btn.addEventListener('click', function() {
-            const tab = this.dataset.tab;
-            const desktop = document.querySelector(`.header-nav .nav-tab[data-tab="${tab}"]`);
-            if (desktop) desktop.click();
-            setActive(tab);
-        });
-    });
-    
-    desktopBtns.forEach(btn => {
-        btn.addEventListener('click', () => setActive(btn.dataset.tab));
-    });
-});
-</script>
-
 </body>
 </html>
